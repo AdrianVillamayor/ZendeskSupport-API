@@ -1,0 +1,22 @@
+{
+    "name": "adrii/zendesk-api",
+    "description": "Lightweight library that allows you to create, edit, delete and upload files to Zendesk. In a clean and standard way.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian",
+            "email": "adrian.villamayor@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Adrii\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "adrii/curl-helper": "^1.6"
+    },
+    "minimum-stability": "dev"
+}

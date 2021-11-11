@@ -81,7 +81,6 @@ class ZendeskAPI
      *
      * @return mixed Automatically decodes JSON responses. If the response is not JSON, the response is returned as is
      */
-
     public function create($comments)
     {
         $endpoint = (count($comments) > 1) ? 'tickets/create_many.json' : 'tickets.json';
@@ -104,9 +103,14 @@ class ZendeskAPI
         $curl->execute();
 
         $response   = $curl->response();
-        $code       = $curl->http_code();
 
-        return $response;
+        list($error, $msg) = $curl->parseCode();
+
+        if (!$error) {
+            return $response;
+        } else {
+            return FALSE;
+        }
     }
 
     public function upload($filename)
@@ -122,6 +126,7 @@ class ZendeskAPI
         $curl->setPostRaw(
             file_get_contents(realpath($filename))
         );
+
         $curl->setMime("binary");
 
         $curl->setHeaders([
@@ -131,11 +136,16 @@ class ZendeskAPI
         $curl->execute();
 
         $response   = $curl->response();
-        $code       = $curl->http_code();
+
+        list($error, $msg) = $curl->parseCode();
 
         $this->_setUpload($response['upload']['token']);
 
-        return $response;
+        if (!$error) {
+            return $response;
+        } else {
+            return FALSE;
+        }
     }
 
     private function _prepareTicket($comments)

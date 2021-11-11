@@ -118,18 +118,20 @@ class ZendeskAPI
         }
     }
 
-    public function upload($filename)
+    public function upload($filename, $tmp = "")
     {
         $endpoint = "uploads.json?filename={$filename}";
 
         $url = $this->_buildUrl($endpoint);
+
+        $path = ($tmp == "") ? file_get_contents(realpath($filename)) : $tmp ;
 
         $curl = new CurlHelper();
 
         $curl->setUrl($url);
 
         $curl->setPostRaw(
-            file_get_contents(realpath($filename))
+            $path
         );
 
         $curl->setMime("binary");

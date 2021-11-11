@@ -67,9 +67,14 @@ class ZendeskAPI
         return $this->base . $endpoint;
     }
 
-    private function _setUpload($token)
+    public function setUpload($token)
     {
         $this->upload[] = $token;
+    }
+   
+    public function getUpload()
+    {
+        return $this->upload;
     }
 
     /**
@@ -139,7 +144,7 @@ class ZendeskAPI
 
         list($error, $msg) = $curl->parseCode();
 
-        $this->_setUpload($response['upload']['token']);
+        $this->setUpload($response['upload']['token']);
 
         if (!$error) {
             return $response;

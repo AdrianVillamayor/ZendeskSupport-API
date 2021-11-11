@@ -124,14 +124,14 @@ class ZendeskAPI
 
         $url = $this->_buildUrl($endpoint);
 
-        $path = ($tmp == "") ? file_get_contents(realpath($filename)) : $tmp ;
+        $path = ($tmp == "") ? realpath($filename) : $tmp ;
 
         $curl = new CurlHelper();
 
         $curl->setUrl($url);
 
         $curl->setPostRaw(
-            $path
+            file_get_contents($path)
         );
 
         $curl->setMime("binary");

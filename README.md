@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/adrii/zendesk-api)](https://packagist.org/packages/adrii/zendesk-api)
 [![License](https://img.shields.io/github/license/AdrianVillamayor/ZendeskAPI)](https://github.com/AdrianVillamayor/ZendeskAPI/blob/main/LICENSE)
 
-Lightweight library that allows you to create, edit, delete and upload files to Zendesk. In a clean and standard way.
+Lightweight library that allows you to create, edit, delete and upload files to Zendesk Suppot. In a clean and standard way.
 
 ## Installation
 
@@ -42,7 +42,10 @@ require_once ROOT . 'ZendeskAPI.php';
         "last_name" => "🍍",
         "email" => "adrian.villamayor@gmail.com",
     );
-
+        
+    for ($i = 0; $i < count($files); $i++) {
+        $zendesk->upload($files[$i]['name'], $files[$i]['tmp_name']);
+    }
 
     $comment = array(
         array(
@@ -52,7 +55,7 @@ require_once ROOT . 'ZendeskAPI.php';
             'comment'       => array(
                 'body'      => $data['body'],
                 'public'    => false,
-                "uploads"   => ["p0zgQW4KOGMMEmT8id5HNplLj", 'GlsXqDW9Kbn95dllS96RaHAd9']
+                "uploads"   => $zendesk->getUpload()
             ),
             'requester'     => array(
                 'locale_id' => '1',
@@ -68,7 +71,6 @@ require_once ROOT . 'ZendeskAPI.php';
     $token      = "{token}";
 
     $zend = new ZendeskApi($subdomain, $user, $token);
-    $zend->upload($img);
 
     $zend->create($comment);
 
